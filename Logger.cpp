@@ -28,6 +28,19 @@ int main(int argc, const char **argv)
         std::cout << argv[2] << " " << "[START] Driver Started\n"
                   << getCurrentTime() << " " << "[START] Logger Started\n";
     }
+
+    while (std::getline(std::cin, nextAction))
+    {
+        if (nextAction == "quit")
+            break;
+
+        for (char &c : nextAction)
+            c = std::toupper(c);
+
+        std::cout << getCurrentTime() << "[" << nextAction << "]\n";
+    }
+
+    std::cout << getCurrentTime() << " [STOP] Logger Stopped\n";
     return 0;
 }
 

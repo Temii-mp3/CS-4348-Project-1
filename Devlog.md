@@ -20,4 +20,8 @@ I have been able to create the file however it is not reading input from the ter
 
 I have been able to implement the clock, now i am able to get the current time. I will use both functions in driver and logger because i need to know when the driver started so that can be included in the log.
 
-Right now what im able to do is create a file, get the time from driver and send it to logger which writes to the file.
+Right now what im able to do is create a file, get the time from driver and send it to logger which writes to the file. Which means i have achieved 2 of my goals. The last goal of today is to establish communcation between logger and logger file (make the file read from logger input)
+
+Upon further research, i realized the std::getline() function will be best for this, i am already appending a new line character to the userInput so the std::getline() function should be able to differenciate between options. For asthethic purposes i will make each option the user selects uppercase and enclosed in brackets.
+
+I have implemented the std::getline() function and it is able to read the options that the user picked so i have been able to achieve all my goals for this session. Now it is time to work on the stretch goal which is to establish communication between driver and encryption process
