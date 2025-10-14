@@ -30,3 +30,5 @@ i have created the encryption file, now i just need to establish communication b
 
 OCT 14 06:12 AM
 I didnt complete the stretch goals for yesterday but i was able to complete the planned goals. This session i plan to finish the driver program and implement all the options so that it easier for me to connect it to the encryption program when i get to writing that. Right now i have completed the password option and part of the history option, all that is left is to complete the history, decrypt, and encrypt options.
+
+So i have been experimenting with the encryptor and the driver and i think im able to make them work primitively but im taking a break for now. i also added a makefile so recompilation is easier

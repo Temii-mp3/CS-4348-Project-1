@@ -30,7 +30,7 @@ int main(int argc, const char **argv)
 
     if (logger == -1)
     {
-        std::cerr << "Error creating c1" << std::endl;
+        std::cerr << "Error creating Child Process" << std::endl;
         exit(-1);
     }
 
@@ -47,41 +47,55 @@ int main(int argc, const char **argv)
     }
     else
     {
-        std::string userInput;
-        do
+        encrypt = fork();
+
+        if (encrypt == 0)
         {
-            std::cout << "---------------------------" << std::endl;
-            std::cout << "Menu" << std::endl;
-            std::cout << "---------------------------" << std::endl;
-            std::cout << "password\nencrypt\ndecrypt\nhistory\nquit\n";
-            std::cout << "Enter an option: ";
-
-            std::cin >> userInput;
-            std::cout << history.size() << std::endl;
-            // userInput = userInput + "\n";
-
-            if (userInput == "password" && history.empty())
+            dup2(p2[0], 0);
+            close(p2[1]);
+            char *args[] = {"./encryptor", NULL};
+            execvp(args[0], args);
+        }
+        else
+        {
+            std::string userInput;
+            do
             {
-                std::cout << "Enter Password: ";
-                std::cin >> password;
-                history.push_back(password);
-            }
-            else if (userInput == "password" && !history.empty())
-            {
-                std::cout << "Would you like to use history Y/N: ";
-                char input;
-                std::cin >> input;
-                std::tolower(input);
-                switch (input)
+                std::cout << "---------------------------" << std::endl;
+                std::cout << "Menu" << std::endl;
+                std::cout << "---------------------------" << std::endl;
+                std::cout << "password\nencrypt\ndecrypt\nhistory\nquit\n";
+                std::cout << "Enter an option: ";
+
+                std::cin >> userInput;
+                std::cout << history.size() << std::endl;
+                // userInput = userInput + "\n";
+
+                if (userInput == "password" && history.empty())
                 {
-                case 'n':
                     std::cout << "Enter Password: ";
                     std::cin >> password;
                     history.push_back(password);
-                case 'y':
-                    for (int i = 1; i <= history.size(); i++)
+                    write(p2[1], password.c_str(), password.size());
+                }
+                else if (userInput == "password" && !history.empty())
+                {
+                    std::cout << "Would you like to use history Y/N: ";
+                    char input;
+                    std::cin >> input;
+                    std::tolower(input);
+                    switch (input)
                     {
-                        std::cout << i << ". " << history[i - 1] << std::endl;
+                    case 'n':
+                        std::cout << "Enter Password: ";
+                        std::cin >> password;
+                        history.push_back(password);
+                        write(p2[1], password.c_str(), password.size());
+                    case 'y':
+                        for (int i = 1; i <= history.size(); i++)
+                        {
+                            std::cout << i << ". " << history[i - 1] << std::endl;
+                        }
                         std::cout << "Pick which number to set as password";
                         int pass;
                         std::cin >> pass;
@@ -91,13 +105,14 @@ int main(int argc, const char **argv)
                             std::cin >> pass;
                         }
                         password = pass;
+                        write(p2[1], password.c_str(), password.size());
                     }
                 }
-            }
 
-            write(p1[1], userInput.c_str(), userInput.size());
+                write(p1[1], userInput.c_str(), userInput.size());
 
-        } while (userInput != "quit");
+            } while (userInput != "quit");
+        }
     }
 
     return 0;
