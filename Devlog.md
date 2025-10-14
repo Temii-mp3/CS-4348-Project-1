@@ -25,3 +25,8 @@ Right now what im able to do is create a file, get the time from driver and send
 Upon further research, i realized the std::getline() function will be best for this, i am already appending a new line character to the userInput so the std::getline() function should be able to differenciate between options. For asthethic purposes i will make each option the user selects uppercase and enclosed in brackets.
 
 I have implemented the std::getline() function and it is able to read the options that the user picked so i have been able to achieve all my goals for this session. Now it is time to work on the stretch goal which is to establish communication between driver and encryption process
+
+i have created the encryption file, now i just need to establish communication between the encryption process and the driver. This will be similar to the logger so i will reuse code
+
+OCT 14 06:12 AM
+I didnt complete the stretch goals for yesterday but i was able to complete the planned goals. This session i plan to finish the driver program and implement all the options so that it easier for me to connect it to the encryption program when i get to writing that. Right now i have completed the password option and part of the history option, all that is left is to complete the history, decrypt, and encrypt options.

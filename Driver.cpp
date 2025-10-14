@@ -3,10 +3,13 @@
 #include <fcntl.h>
 #include <chrono>
 #include <iomanip>
+#include <vector>
 
 std::string getCurrentTime();
 int main(int argc, const char **argv)
 {
+    std::vector<std::string> history;
+    std::string password;
     int p1[2], p2[2];
     pid_t logger;
     pid_t encrypt;
@@ -14,6 +17,12 @@ int main(int argc, const char **argv)
     if (pipe(p1) == -1)
     {
         std::cerr << "Unable to create logger pipe" << std::endl;
+        exit(-1);
+    }
+
+    if (pipe(p2) == -1)
+    {
+        std::cerr << "Unable to create encryptor pipe" << std::endl;
         exit(-1);
     }
 
@@ -48,7 +57,43 @@ int main(int argc, const char **argv)
             std::cout << "Enter an option: ";
 
             std::cin >> userInput;
-            userInput = userInput + "\n";
+            std::cout << history.size() << std::endl;
+            // userInput = userInput + "\n";
+
+            if (userInput == "password" && history.empty())
+            {
+                std::cout << "Enter Password: ";
+                std::cin >> password;
+                history.push_back(password);
+            }
+            else if (userInput == "password" && !history.empty())
+            {
+                std::cout << "Would you like to use history Y/N: ";
+                char input;
+                std::cin >> input;
+                std::tolower(input);
+                switch (input)
+                {
+                case 'n':
+                    std::cout << "Enter Password: ";
+                    std::cin >> password;
+                    history.push_back(password);
+                case 'y':
+                    for (int i = 1; i <= history.size(); i++)
+                    {
+                        std::cout << i << ". " << history[i - 1] << std::endl;
+                        std::cout << "Pick which number to set as password";
+                        int pass;
+                        std::cin >> pass;
+                        while (pass > history.size())
+                        {
+                            std::cout << "Invalid Option, Try Again: ";
+                            std::cin >> pass;
+                        }
+                        password = pass;
+                    }
+                }
+            }
 
             write(p1[1], userInput.c_str(), userInput.size());
 
