@@ -9,6 +9,7 @@ std::string getCurrentTime();
 int main(int argc, const char **argv)
 {
     std::vector<std::string> history;
+    std::string passwordNewline;
     std::string password;
     int p1[2], p2[2];
     pid_t logger;
@@ -53,11 +54,14 @@ int main(int argc, const char **argv)
         {
             dup2(p2[0], 0);
             close(p2[1]);
+            close(p2[0]);
             char *args[] = {"./encryptor", NULL};
             execvp(args[0], args);
         }
         else
         {
+            close(p1[0]);
+            close(p2[0]);
             std::string userInput;
             do
             {
@@ -76,21 +80,24 @@ int main(int argc, const char **argv)
                     std::cout << "Enter Password: ";
                     std::cin >> password;
                     history.push_back(password);
-                    write(p2[1], password.c_str(), password.size());
+                    passwordNewline = password + "\n";
+                    write(p2[1], passwordNewline.c_str(), passwordNewline.size());
                 }
                 else if (userInput == "password" && !history.empty())
                 {
                     std::cout << "Would you like to use history Y/N: ";
                     char input;
                     std::cin >> input;
-                    std::tolower(input);
+                    input = std::tolower(input);
                     switch (input)
                     {
                     case 'n':
                         std::cout << "Enter Password: ";
                         std::cin >> password;
                         history.push_back(password);
-                        write(p2[1], password.c_str(), password.size());
+                        passwordNewline = password + "\n";
+                        write(p2[1], passwordNewline.c_str(), passwordNewline.size());
+                        break;
                     case 'y':
                         for (int i = 1; i <= history.size(); i++)
                         {
@@ -104,8 +111,10 @@ int main(int argc, const char **argv)
                             std::cout << "Invalid Option, Try Again: ";
                             std::cin >> pass;
                         }
-                        password = pass;
-                        write(p2[1], password.c_str(), password.size());
+                        password = history[pass - 1];
+                        passwordNewline = password + "\n";
+                        write(p2[1], passwordNewline.c_str(), passwordNewline.size());
+                        break;
                     }
                 }
 

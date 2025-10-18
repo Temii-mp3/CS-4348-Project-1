@@ -3,6 +3,7 @@
 int main()
 {
     std::string passkey;
+    std::cout << "Hello im a donkey" << std::endl;
     while (std::getline(std::cin, passkey))
     {
 

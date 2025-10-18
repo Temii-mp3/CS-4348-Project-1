@@ -32,3 +32,6 @@ OCT 14 06:12 AM
 I didnt complete the stretch goals for yesterday but i was able to complete the planned goals. This session i plan to finish the driver program and implement all the options so that it easier for me to connect it to the encryption program when i get to writing that. Right now i have completed the password option and part of the history option, all that is left is to complete the history, decrypt, and encrypt options.
 
 So i have been experimenting with the encryptor and the driver and i think im able to make them work primitively but im taking a break for now. i also added a makefile so recompilation is easier
+
+OCT 18 11:38 AM
+Hello, i took a very long break, not by choice, but by the amount of tasks i had to get done this week. But im back now. The goal for today would be to finish this program so i have a day to debug and make sure everything is right. What i have left to complete is the encryptor mostly, i realized i was running a-out which contained outdated code but the makefile changed it to driver so now the encryptor and driver can communicate somewhat. I will spend the rest of this session working on that to ensure they communicate better.
