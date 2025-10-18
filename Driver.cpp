@@ -73,7 +73,7 @@ int main(int argc, const char **argv)
 
                 std::cin >> userInput;
                 std::cout << history.size() << std::endl;
-                // userInput = userInput + "\n";
+                std::string loggerInput = userInput + "\n";
 
                 if (userInput == "password" && history.empty())
                 {
@@ -82,6 +82,8 @@ int main(int argc, const char **argv)
                     history.push_back(password);
                     passwordNewline = password + "\n";
                     write(p2[1], passwordNewline.c_str(), passwordNewline.size());
+                    write(p1[1], loggerInput.c_str(), loggerInput.size());
+                    write(p1[1], passwordNewline.c_str(), passwordNewline.size());
                 }
                 else if (userInput == "password" && !history.empty())
                 {
@@ -96,7 +98,11 @@ int main(int argc, const char **argv)
                         std::cin >> password;
                         history.push_back(password);
                         passwordNewline = password + "\n";
+                        std::string encryptCommand = "PASS " + password + "\n";
+                        write(p2[1], loggerInput.c_str(), loggerInput.size());
                         write(p2[1], passwordNewline.c_str(), passwordNewline.size());
+                        write(p1[1], loggerInput.c_str(), loggerInput.size());
+                        write(p1[1], passwordNewline.c_str(), passwordNewline.size());
                         break;
                     case 'y':
                         for (int i = 1; i <= history.size(); i++)
@@ -117,8 +123,6 @@ int main(int argc, const char **argv)
                         break;
                     }
                 }
-
-                write(p1[1], userInput.c_str(), userInput.size());
 
             } while (userInput != "quit");
         }

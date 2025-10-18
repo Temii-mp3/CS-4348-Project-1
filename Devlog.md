@@ -35,3 +35,5 @@ So i have been experimenting with the encryptor and the driver and i think im ab
 
 OCT 18 11:38 AM
 Hello, i took a very long break, not by choice, but by the amount of tasks i had to get done this week. But im back now. The goal for today would be to finish this program so i have a day to debug and make sure everything is right. What i have left to complete is the encryptor mostly, i realized i was running a-out which contained outdated code but the makefile changed it to driver so now the encryptor and driver can communicate somewhat. I will spend the rest of this session working on that to ensure they communicate better.
+
+So i have been able to figure out how the encrypt command is supposed to work after taking a look at the recording. I had to do some research to figure out how to parse the commands but its working now. it isnt working with the driver program i just wanted to provide an update. I will sync it with the driver program in the next commit. I also added some things to the logger and they somewhat work but im not paying attention to that at the moment

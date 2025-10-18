@@ -37,7 +37,16 @@ int main(int argc, const char **argv)
         for (char &c : nextAction)
             c = std::toupper(c);
 
-        std::cout << getCurrentTime() << "[" << nextAction << "]\n";
+        if (nextAction == "PASSWORD")
+        {
+            std::string passwordValue;
+            std::getline(std::cin, passwordValue); // Read the actual password
+            std::cout << getCurrentTime() << " [PASSWORD] password was set to " << passwordValue << std::endl;
+        }
+        else
+        {
+            std::cout << getCurrentTime() << " [" << nextAction << "]" << std::endl;
+        }
     }
 
     std::cout << getCurrentTime() << " [STOP] Logger Stopped\n";
