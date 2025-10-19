@@ -86,16 +86,16 @@ std::string vigenereEncrypt(std::string text, std::string key)
 
 char cesearCypherEncrypt(char letter, char letter2)
 {
-    int textIndex = letter - 'a';
-    int keyIndex = letter2 - 'a';
+    int textIndex = std::tolower(letter) - 'a';
+    int keyIndex = std::tolower(letter2) - 'a';
     int resultIndex = (textIndex + keyIndex) % 26;
     return resultIndex + 'A'; // returns ascii value
 }
 
 char cesearCypherDecrypt(char letter, char letter2)
 {
-    int textIndex = letter - 'a';
-    int keyIndex = letter2 - 'a';
+    int textIndex = std::tolower(letter) - 'a';
+    int keyIndex = std::tolower(letter2) - 'a';
     int resultIndex = ((textIndex - keyIndex) + 26) % 26;
     return resultIndex + 'A'; // returns ascii value
 }

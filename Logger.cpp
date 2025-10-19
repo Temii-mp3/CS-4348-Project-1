@@ -26,13 +26,17 @@ int main(int argc, const char **argv)
               << std::flush;
     while (std::getline(std::cin, nextAction))
     {
-        if (nextAction == "quit")
-            break;
         for (char &c : nextAction)
             c = std::toupper(c);
+        if (nextAction == "QUIT")
+        {
+            std::cout << getCurrentTime() << " [QUIT] Driver Stopped" << std::endl;
+            break;
+        }
+
         if (nextAction == "PASSWORD")
         {
-            std::cout << getCurrentTime() << " [PASSWORD] password was set" << std::endl;
+            std::cout << getCurrentTime() << " [PASSWORD] Password was set" << std::endl;
         }
         else if (nextAction == "ENCRYPT")
         {
