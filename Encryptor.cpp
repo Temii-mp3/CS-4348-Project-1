@@ -2,6 +2,10 @@
 #include <sstream>
 #include <string>
 
+std::string vigenereDecrypt(std::string, std::string);
+std::string vigenereEncrypt(std::string, std::string);
+char cesearCypherEncrypt(char, char);
+char cesearCypherDecrypt(char, char);
 int main()
 {
     std::string currentPassword = "";
@@ -22,17 +26,18 @@ int main()
         if (command == "PASS")
         {
             currentPassword = argument;
-            std::cout << "RESULT" << std::endl;
+            std::cout << "Password has been set" << std::endl;
         }
         else if (command == "ENCRYPT")
         {
+            std::cout << argument << std::endl;
             if (currentPassword.empty())
             {
                 std::cout << "ERROR Password not set" << std::endl;
             }
             else
             {
-                std::string encrypted = vigenereEncrypt(argument);
+                std::string encrypted = vigenereEncrypt(argument, currentPassword);
                 std::cout << "RESULT " << encrypted << std::endl;
             }
         }
@@ -44,7 +49,7 @@ int main()
             }
             else
             {
-                std::string decrypted = vigenereDecrypt(argument);
+                std::string decrypted = vigenereDecrypt(argument, currentPassword);
                 std::cout << "RESULT " << decrypted << std::endl;
             }
         }
@@ -57,10 +62,40 @@ int main()
     return 0;
 }
 
-std::string vigenereDecrypt(std::string arg, std::string pass)
+std::string vigenereDecrypt(std::string text, std::string key)
 {
+    std::string result;
+    for (int i = 0; i < text.length(); i++)
+    {
+        result.append(1, cesearCypherDecrypt(text[i], key[i % key.length()]));
+    }
+
+    return result;
 }
 
-std::string vigenereEncrypt(std::string arg, std::string pass)
+std::string vigenereEncrypt(std::string text, std::string key)
 {
+    std::string result;
+    for (int i = 0; i < text.length(); i++)
+    {
+        result.append(1, cesearCypherEncrypt(text[i], key[i % key.length()]));
+    }
+
+    return result;
+}
+
+char cesearCypherEncrypt(char letter, char letter2)
+{
+    int textIndex = letter - 'a';
+    int keyIndex = letter2 - 'a';
+    int resultIndex = (textIndex + keyIndex) % 26;
+    return resultIndex + 'A'; // returns ascii value
+}
+
+char cesearCypherDecrypt(char letter, char letter2)
+{
+    int textIndex = letter - 'a';
+    int keyIndex = letter2 - 'a';
+    int resultIndex = ((textIndex - keyIndex) + 26) % 26;
+    return resultIndex + 'A'; // returns ascii value
 }
